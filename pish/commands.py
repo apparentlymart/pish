@@ -5,8 +5,11 @@ def ls(inp, pattern="*"):
     return glob.iglob(pattern)
 
 
-def cat(inp, fn):
-    return (x.rstrip("\r\n") for x in file(fn))
+def cat(inp, *fns):
+    files = (file(fn) for fn in fns)
+    for f in files:
+        for l in f:
+            yield l.rstrip("\r\n")
 
 
 def grep(inp, f):

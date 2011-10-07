@@ -30,17 +30,6 @@ class Pisher(object):
         return self._commands[name].load()
 
 
-def main(*argv):
-    from optparse import OptionParser
-    parser = OptionParser()
-    parser.add_option("-e", dest="execute",
-                      help="a command to execute",
-                      metavar="command")
-
-    (options, args) = parser.parse_args()
-    return 0
-
-
 def print_command_results(func, inp=(), kwargs=None):
     if kwargs is None:
         kwargs = {}

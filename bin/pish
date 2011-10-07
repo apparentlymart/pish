@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import pish
+import pish.shell
 import sys
 
-pish.main(*sys.argv)
+pish.shell.main(*sys.argv)
 

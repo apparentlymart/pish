@@ -24,10 +24,13 @@ setup(
         "pish.commands": [
             "glob = pish.commands:glob",
             "readfile = pish.commands:readfile",
+            "stat = pish.commands:stat",
             "grep = pish.commands:grep",
             "map = pish.commands:map",
             "sort = pish.commands:sort",
             "uniq = pish.commands:uniq",
+            "getattr = pish.commands:getattr",
+            "sum = pish.commands:sum",
         ],
     },
 )

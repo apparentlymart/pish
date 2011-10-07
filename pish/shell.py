@@ -22,6 +22,7 @@ def repl():
     import readline
     import atexit
     import traceback
+    import pprint
     histfile = os.path.expanduser("~/.pish_history")
     try:
         readline.read_history_file(histfile)
@@ -39,7 +40,7 @@ def repl():
                 continue
             cmd_line = parse_command_line(cmd_str)
             for result in cmd_line.get_iterable(pisher):
-                print repr(result)
+                pprint.pprint(result)
         except EOFError:
             print ""
             return 0

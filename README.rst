@@ -13,19 +13,13 @@ applies it instead to Python iterables.
 during PyCodeConf 2011 in Miami, FL as an application of various
 cool things I learned or was inspired by:
 
-* Python allows functions that deal in iterables to be
-chained together like UNIX pipes, as pointed out by
-Raymond Hettinger in his "Python is Awesome" talk.
+* Python allows functions that deal in iterables to be chained together like UNIX pipes, as pointed out by Raymond Hettinger in his "Python is Awesome" talk.
 
-* PyParsing makes it easy to put together a parser
-for an arbitrary machine language very quickly.
+* PyParsing makes it easy to put together a parser for an arbitrary machine language very quickly.
 
-* Entry Points are an interesting mechanism for
-decentralized extensibility of Python apps.
+* Entry Points are an interesting mechanism for decentralized extensibility of Python apps.
 
-* Code really is a first-class object in Python:
-raw code objects, the `compile` function and
-AST wrangling are really powerful and supplied as standard.
+* Code really is a first-class object in Python: raw code objects, the `compile` function and AST wrangling are really powerful and supplied as standard.
 
 Examples
 --------

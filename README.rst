@@ -134,3 +134,26 @@ as `inp`::
     u'EXAMPLE/EXAMPLE5.PY'
     u'EXAMPLE/EXAMPLE4.PY'
 
+Command Interface
+-----------------
+
+New commands can be added using the entrypoint mechanism.
+
+Just declare an entrypoint in the `pish.commands` group named
+after the command you want to add.
+
+The function you refer to must support the following interface:
+
+* the first positional argument is an interable representing the
+  input stream. Conventionally this is called `inp`.
+
+* any positional arguments passed after the command name in a statement
+  become further positional arguments to this function.
+
+* any arguments of the form `--key=value` will be passed in as keyword
+  arguments to the function.
+
+* the function must return something iterable which is the output stream.
+  (If the function only returns one value, just return a one-element tuple
+  containing the value.)
+

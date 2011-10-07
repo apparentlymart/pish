@@ -138,3 +138,10 @@ def diff(inp, iter1, iter2=None):
         hunk.olditems = t1[i1:i2]
         hunk.newitems = t2[j1:j2]
         yield(hunk)
+
+
+def cat(inp):
+    for it in inp:
+        for value in it:
+            yield value
+

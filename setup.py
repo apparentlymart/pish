@@ -37,6 +37,7 @@ setup(
             "countuniq = pish.commands:countuniq",
             "zip = pish.commands:zip",
             "diff = pish.commands:diff",
+            "cat = pish.commands:cat",
         ],
     },
 )

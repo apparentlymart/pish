@@ -19,9 +19,9 @@ class Command(object):
 
         for param in self.params.exprs:
             if type(param) is Option:
-                kwargs[param.name] = param.expr.get_value()
+                kwargs[param.name] = param.expr.get_value(pisher)
             else:
-                args.append(param.get_value())
+                args.append(param.get_value(pisher))
 
         for val in impl(inp, *args, **kwargs):
             yield val
@@ -39,7 +39,7 @@ class PythonLambda(object):
         for val in eval(self.code, {"inp": inp}):
             yield val
 
-    def get_value(self):
+    def get_value(self, pisher):
         def func(**kwargs):
             return eval(self.code, kwargs)
         func.__name__ = "<lambda>"
@@ -53,7 +53,7 @@ class Literal(object):
     def __repr__(self):
         return "<Literal %s>" % self.value
 
-    def get_value(self):
+    def get_value(self, pisher):
         return self.value
 
 
@@ -86,6 +86,18 @@ class CmdLine(object):
             yield value
 
 
+class NestedCmdLine(object):
+
+    def __init__(self, match, location, tokens):
+        self.cmdline = tokens[1]
+
+    def __repr__(self):
+        return "<NestedCmdLine %r>" % self.cmdline.parts
+
+    def get_value(self, pisher):
+        return self.cmdline.get_iterable(pisher)
+
+
 class Params(object):
     def __init__(self, match, location, tokens):
         self.exprs = tokens[:]
@@ -107,13 +119,17 @@ def transform_unquoted_literal(match, location, tokens):
     else:
         return value.decode('utf8')
 
+# Forward-declare cmd_line so that nested_cmd_line can refer to it
+cmd_line = Forward()
 
 cmd_name = Word(alphas)
 unquoted_literal = Word(alphanums + '.').setParseAction(transform_unquoted_literal)
 literal = (QuotedString(quoteChar='"', escChar='\\') | unquoted_literal).setParseAction(Literal)
 python_lambda = nestedExpr("{", "}", ignoreExpr=dblQuotedString | sglQuotedString).setParseAction(PythonLambda)
 
-expr = python_lambda | literal
+nested_cmd_line = ('<' + cmd_line + '>').setParseAction(NestedCmdLine)
+
+expr = python_lambda | nested_cmd_line | literal
 
 option = ("--" + Word(alphanums) + Optional("=" + expr)).setParseAction(Option)
 params = ZeroOrMore(expr | option).setParseAction(Params)
@@ -121,7 +137,7 @@ command = (cmd_name + params).setParseAction(Command)
 
 cmd_line_part = (command | python_lambda)
 
-cmd_line = (cmd_line_part + ZeroOrMore("|" + cmd_line_part)).setParseAction(CmdLine)
+cmd_line << (cmd_line_part + ZeroOrMore("|" + cmd_line_part)).setParseAction(CmdLine)
 
 
 def parse_command_line(line):

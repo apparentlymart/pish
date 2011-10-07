@@ -134,6 +134,19 @@ as `inp`::
     u'EXAMPLE/EXAMPLE5.PY'
     u'EXAMPLE/EXAMPLE4.PY'
 
+Some commands take whole statements as parameters. An example of
+this is `append`, which allows new items to be added onto the end of a stream:
+
+    > range 1 5 | append <range 10 14>
+    1
+    2
+    3
+    4
+    10
+    11
+    12
+    13
+
 Command Interface
 -----------------
 
@@ -156,4 +169,22 @@ The function you refer to must support the following interface:
 * the function must return something iterable which is the output stream.
   (If the function only returns one value, just return a one-element tuple
   containing the value.)
+
+The parameters to the command are marshalled from the provided parameter
+list as follows:
+
+* an unquoted literal that consists only of digits will be passed as an `int`.
+
+* an unquoted literal with two sets of digits separated by a period will be passed
+  as a `float`.
+
+* an unquoted literal that is exactly `True` or `False` will be passed as a `bool`.
+
+* a quoted literal will always be passed as a string.
+
+* a lambda function will be passed as a callable whose kwargs become the global
+  scope in which the provided expression is evaluated.
+
+* an inline statement will be passed as an iterable that returns the results of
+  the statement.
 

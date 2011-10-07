@@ -33,7 +33,7 @@ is the input to the next.
 
 The first command in a statement must be one that can generate output
 given empty input, because the input to the first command is always
-empty. `glob` is an example of such a command:
+empty. `glob` is an example of such a command::
 
     > glob "example/*"
     u'example/example1.pl'
@@ -52,7 +52,7 @@ As you can see, the shell just prints out whatever Python values are
 yielded from the command. In this case, the results are all strings.
 
 A second command in the statement consumes and transforms the output
-from the first:
+from the first::
 
     > glob "example/*" | regexsearch "(\w+)$"
     {1: u'pl'}
@@ -74,7 +74,7 @@ be any Python value.
 Different commands expect different types of value as input,
 but most of the time we ultimately want to get strings for
 human consumption, so there are commands provided to pull
-certain keys or attributes from objects.
+certain keys or attributes from objects::
 
     > glob "example/*" | regexsearch "(\w+)$" | getkey 1
     u'pl'
@@ -89,30 +89,29 @@ certain keys or attributes from objects.
     u'py'
     u'py'
 
-And now we're back to strings, which allows us to do this:
+And now we're back to strings, which allows us to do this::
 
     > glob "example/*" | regexsearch "(\w+)$" | getkey 1 | uniq | sort
     u'java'
     u'pl'
     u'py'
 
-Some commands only produce a single result no matter how much input they get.
+Some commands only produce a single result no matter how much input they get::
 
     > glob "example/*" | regexsearch "(\w+)$" | getkey 1 | uniq | count
     3
-
     > glob "example/*" | regexsearch "(\w+)$" | getkey 1 | countuniq
     {u'java': 3, u'pl': 2, u'py': 6}
 
 Some commands except lambda functions that use Python expression syntax
-for dynamic behavior:
+for dynamic behavior::
 
     > glob "example/*" | regexsearch "(\w+)$" | getkey 1 | uniq | grep { value[0] == "p" }
     u'py'
     u'pl'
 
 This lambda syntax can also be used as a command in its own right, allowing
-arbitrary python expressions to generate data.
+arbitrary python expressions to generate data::
 
     > { (6,1,2,2,3,3,3,4,5,6) } | uniq
     1
@@ -123,7 +122,7 @@ arbitrary python expressions to generate data.
     6
 
 The input to a command-level lambda is available in the scope of the lambda
-as `inp`:
+as `inp`::
 
     > glob "example/*" | { (x.upper() for x in inp) }
     u'EXAMPLE/EXAMPLE1.PL'

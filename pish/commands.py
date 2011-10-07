@@ -47,9 +47,48 @@ def getattr(inp, attrname):
         yield __builtin__.getattr(x, attrname)
 
 
+def getkey(inp, key):
+    for x in inp:
+        yield x[key]
+
+
 def sum(inp):
     ret = 0
     for x in inp:
         ret = ret + x
     return (ret,)
 
+
+def regexsearch(inp, regex):
+    import re
+    for x in inp:
+        match = re.search(regex, x)
+        if match:
+            d = match.groupdict()
+            idx = 1
+            for s in match.groups():
+                d[idx] = s
+                idx = idx + 1
+            yield d
+        else:
+            yield {}
+
+
+def count(inp):
+    ret = 0
+    for x in inp:
+        ret = ret + 1
+    return (ret,)
+
+
+def countuniq(inp):
+    ret = {}
+    for x in inp:
+        if x not in ret:
+            ret[x] = 0
+        ret[x] = ret[x] + 1
+    return (ret,)
+
+
+def uniq(inp):
+    return set(inp)

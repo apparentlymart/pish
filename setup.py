@@ -30,7 +30,11 @@ setup(
             "sort = pish.commands:sort",
             "uniq = pish.commands:uniq",
             "getattr = pish.commands:getattr",
+            "getkey = pish.commands:getkey",
             "sum = pish.commands:sum",
+            "regexsearch = pish.commands:regexsearch",
+            "count = pish.commands:count",
+            "countuniq = pish.commands:countuniq",
         ],
     },
 )

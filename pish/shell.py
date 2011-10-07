@@ -35,8 +35,11 @@ def repl():
     while True:
         try:
             cmd_str = raw_input("> ")
+            if cmd_str == "":
+                continue
             cmd_line = parse_command_line(cmd_str)
-            print repr(cmd_line)
+            for result in cmd_line.get_iterable(pisher):
+                print repr(result)
         except EOFError:
             print ""
             return 0

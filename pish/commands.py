@@ -107,3 +107,34 @@ def zip(inp, iter1, iter2=None):
     except StopIteration:
         pass
 
+
+def diff(inp, iter1, iter2=None):
+    if iter2 is None:
+        iter2 = iter1
+        iter1 = inp
+
+    t1 = tuple(iter1)
+    t2 = tuple(iter2)
+
+    class Hunk(object):
+        def __repr__(self):
+            return '<Hunk %s %i:%i %i:%i %r to %r>' % (self.action,
+                                                       self.oldstart,
+                                                       self.oldend,
+                                                       self.newstart,
+                                                       self.newend,
+                                                       self.olditems,
+                                                       self.newitems)
+
+    import difflib
+    matcher = difflib.SequenceMatcher(None, t1, t2)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        hunk = Hunk()
+        hunk.action = tag
+        hunk.oldstart = i1
+        hunk.oldend = i2
+        hunk.newstart = j1
+        hunk.newend = j2
+        hunk.olditems = t1[i1:i2]
+        hunk.newitems = t2[j1:j2]
+        yield(hunk)

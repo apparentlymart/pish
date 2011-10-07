@@ -163,3 +163,43 @@ def cat(inp):
 
 def range(inp, start, stop, step=1):
     return xrange(start, stop, step)
+
+
+def append(inp, other):
+    for value in inp:
+        yield value
+    for value in other:
+        yield value
+
+
+def prepend(inp, other):
+    for value in other:
+        yield value
+    for value in inp:
+        yield value
+
+
+def head(inp, items=10):
+    got = 0
+    for value in inp:
+        yield value
+        got = got + 1
+        if got == items:
+            break
+
+
+def tail(inp, items=10):
+    i1 = iter(inp)
+    i2 = iter(inp)
+
+    from collections import deque
+
+    q = deque()
+
+    for value in inp:
+        q.append(value)
+        if len(q) > items:
+            q.popleft()
+
+    return q
+

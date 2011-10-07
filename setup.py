@@ -41,6 +41,10 @@ setup(
             "reverse = pish.commands:reverse",
             "reduce = pish.commands:reduce",
             "range = pish.commands:range",
+            "append = pish.commands:append",
+            "prepend = pish.commands:prepend",
+            "head = pish.commands:head",
+            "tail = pish.commands:tail",
         ],
     },
 )

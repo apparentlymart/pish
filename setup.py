@@ -22,10 +22,12 @@ setup(
 
     entry_points={
         "pish.commands": [
-            "ls = pish.commands:ls",
-            "cat = pish.commands:cat",
+            "glob = pish.commands:glob",
+            "readfile = pish.commands:readfile",
             "grep = pish.commands:grep",
             "map = pish.commands:map",
+            "sort = pish.commands:sort",
+            "uniq = pish.commands:uniq",
         ],
     },
 )

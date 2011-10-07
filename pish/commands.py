@@ -203,3 +203,11 @@ def tail(inp, items=10):
 
     return q
 
+
+def slowdown(inp, delay=1):
+    import time
+    for value in inp:
+        yield value
+        time.sleep(delay)
+
+

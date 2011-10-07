@@ -33,6 +33,7 @@ setup(
             "getkey = pish.commands:getkey",
             "sum = pish.commands:sum",
             "regexsearch = pish.commands:regexsearch",
+            "regexsplit = pish.commands:regexsplit",
             "count = pish.commands:count",
             "countuniq = pish.commands:countuniq",
             "zip = pish.commands:zip",

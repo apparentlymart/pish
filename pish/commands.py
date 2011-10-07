@@ -57,9 +57,13 @@ def reduce(inp, f, init=None):
     return (__builtin__.reduce(reducewrapper, inp, initializer),)
 
 
-def getattr(inp, attrname):
-    for x in inp:
-        yield __builtin__.getattr(x, attrname)
+def getattr(inp, *attrnames):
+    if len(attrnames) == 1:
+        for x in inp:
+            yield __builtin__.getattr(x, attrnames[0])
+    else:
+        for x in inp:
+            yield [__builtin__.getattr(x, attrname) for attrname in attrnames]
 
 
 def getkey(inp, key):
@@ -87,6 +91,12 @@ def regexsearch(inp, regex):
             yield d
         else:
             yield {}
+
+
+def regexsplit(inp, regex, maxsplit=0):
+    import re
+    for value in inp:
+        yield re.split(regex, value, maxsplit=maxsplit)
 
 
 def count(inp):

@@ -36,7 +36,7 @@ class PythonLambda(object):
         return "<PythonLambda {%s}>" % self.expr
 
     def get_iterable(self, pisher, inp=()):
-        for val in eval(self.code):
+        for val in eval(self.code, {"inp": inp}):
             yield val
 
     def get_value(self):

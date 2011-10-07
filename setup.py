@@ -38,6 +38,9 @@ setup(
             "zip = pish.commands:zip",
             "diff = pish.commands:diff",
             "cat = pish.commands:cat",
+            "reverse = pish.commands:reverse",
+            "reduce = pish.commands:reduce",
+            "range = pish.commands:range",
         ],
     },
 )

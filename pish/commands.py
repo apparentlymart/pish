@@ -42,6 +42,21 @@ def sort(inp, f=None):
     return sorted(inp, key=f)
 
 
+def reverse(inp):
+    return reversed(tuple(inp))
+
+
+def reduce(inp, f, init=None):
+    if init is not None:
+        initializer = init()
+    else:
+        initializer = 0
+    def reducewrapper(result, value):
+        return f(result=result, value=value)
+
+    return (__builtin__.reduce(reducewrapper, inp, initializer),)
+
+
 def getattr(inp, attrname):
     for x in inp:
         yield __builtin__.getattr(x, attrname)
@@ -145,3 +160,6 @@ def cat(inp):
         for value in it:
             yield value
 
+
+def range(inp, start, stop, step=1):
+    return xrange(start, stop, step)

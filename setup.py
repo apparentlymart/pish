@@ -35,6 +35,7 @@ setup(
             "regexsearch = pish.commands:regexsearch",
             "count = pish.commands:count",
             "countuniq = pish.commands:countuniq",
+            "zip = pish.commands:zip",
         ],
     },
 )

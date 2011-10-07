@@ -92,3 +92,18 @@ def countuniq(inp):
 
 def uniq(inp):
     return set(inp)
+
+
+def zip(inp, iter1, iter2=None):
+    if iter2 is None:
+        iter2 = iter1
+        iter1 = inp
+
+    try:
+        while True:
+            v1 = iter1.next()
+            v2 = iter2.next()
+            yield(v1, v2)
+    except StopIteration:
+        pass
+

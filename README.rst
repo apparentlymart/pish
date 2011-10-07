@@ -16,10 +16,13 @@ cool things I learned or was inspired by:
 * Python allows functions that deal in iterables to be
 chained together like UNIX pipes, as pointed out by
 Raymond Hettinger in his "Python is Awesome" talk.
+
 * PyParsing makes it easy to put together a parser
 for an arbitrary machine language very quickly.
+
 * Entry Points are an interesting mechanism for
 decentralized extensibility of Python apps.
+
 * Code really is a first-class object in Python:
 raw code objects, the `compile` function and
 AST wrangling are really powerful and supplied as standard.

@@ -47,6 +47,7 @@ setup(
             "prepend = pish.commands:prepend",
             "head = pish.commands:head",
             "tail = pish.commands:tail",
+            "skip = pish.commands:skip",
             "slowdown = pish.commands:slowdown",
         ],
     },

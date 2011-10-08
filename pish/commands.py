@@ -279,6 +279,15 @@ def tail(inp, items=10):
     return q
 
 
+def skip(inp, toskip):
+    got = 0
+    for value in inp:
+        if got >= toskip:
+            yield value
+        else:
+            got = got + 1
+
+
 def slowdown(inp, delay=1):
     import time
     for value in inp:

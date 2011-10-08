@@ -24,6 +24,7 @@ setup(
         "pish.commands": [
             "glob = pish.commands:glob",
             "readfile = pish.commands:readfile",
+            "exec = pish.commands:exec_",
             "stat = pish.commands:stat",
             "grep = pish.commands:grep",
             "map = pish.commands:map",

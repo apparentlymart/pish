@@ -16,6 +16,71 @@ def readfile(inp, *fns):
             yield l.rstrip("\r\n")
 
 
+def exec_(inp, cmd):
+    from subprocess import Popen, PIPE
+    from select import select
+    p = Popen(cmd,
+              shell=True,
+              universal_newlines=True,
+              stdin=PIPE,
+              stdout=PIPE)
+
+    line_in_progress = ""
+    it = iter(inp)
+    still_going = True
+
+    while True: # working on inp
+        if still_going:
+            check_write = (p.stdin.fileno(),)
+        else:
+            check_write = ()
+
+        result = select((p.stdout.fileno(),), check_write, ())
+
+        if len(result[0]):
+            # There's something for us to read
+            buf = p.stdout.read(2)
+            if len(buf) == 0:
+                # EOF, so yield what's left in our buffer, wait for the process to exit
+                # and then we're done.
+                if line_in_progress != "":
+                    yield line_in_progress
+                p.wait()
+                return
+
+            lines = buf.split("\n")
+            buf = None
+            if len(lines) > 1:
+                yield line_in_progress + lines[0]
+                for line in lines[1:-1]:
+                    yield line
+                line_in_progress = lines[-1]
+            else:
+                line_in_progress = line_in_progress + lines[0]
+
+            # Go back to the top of the loop now so we can read
+            # anything else that's outstanding in the buffer before
+            # we write anything.
+            continue
+
+        # Once we've got here we've depleted the process stdout for now,
+        # so let's feed its stdin one line to munch on.
+        if len(result[1]):
+            try:
+                line = it.next()
+            except StopIteration:
+                # Close stdin so the process knows not to expect
+                # anything else and then unset our flag so we know
+                # not to try reading from the iterator anymore.
+                p.stdin.close()
+                still_going = False
+                continue
+
+            p.stdin.write(line + "\n")
+            # Now we return to the top of the loop so we can
+            # try to read again
+
+
 def stat(inp, *fns):
     import os
     if len(fns) == 0:
